@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "send21-haystack"
+version = "0.1.0"
+description = "Haystack component that asks send21 to prepare a non-custodial payment request (pay link). Not an official deepset integration."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "send21", email = "info@send21.io" }]
+requires-python = ">=3.10"
+dependencies = ["haystack-ai>=2.0", "mcp>=1.2"]
+keywords = ["haystack", "send21", "payments", "agents", "mcp"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.urls]
+Repository = "https://github.com/send21io/send21-haystack"
+Issues = "https://github.com/send21io/send21-haystack/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/send21_haystack"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
