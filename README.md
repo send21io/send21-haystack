@@ -45,12 +45,12 @@ It reads `id` and `payPath` from the result; the pay link is `https://send21.io`
 ## Webhooks
 
 ```python
-from send21_haystack import verify_send21_signature
+from send21_haystack import verify_send21_webhook
 
-ok = verify_send21_signature(raw_body_bytes, headers.get("X-Send21-Signature"), signing_secret)
+ok, scheme = verify_send21_webhook(raw_body_bytes, headers, signing_secret)  # scheme: "v2", "v1" or None
 ```
 
-`X-Send21-Signature` is `sha256=<lowercase hex HMAC-SHA256 of the raw body>` keyed with the endpoint signing secret. Check the raw bytes before parsing. Store `X-Send21-Delivery` and ignore repeats; deliveries can be retried and arrive out of order. A stdlib receiver is in `examples/webhook_receiver.py`.
+It checks `X-Send21-Signature-V2` first: `t=<timestamp>,v1=<lowercase hex HMAC-SHA256 of "<timestamp>.<delivery id>.<raw body>">`, keyed with the endpoint signing secret, and refuses deliveries older than 5 minutes, so a copied delivery cannot be replayed. The legacy `X-Send21-Signature` (`sha256=<lowercase hex HMAC-SHA256 of the raw body>`, no timestamp) is still sent for compatibility and is used only as a fallback when no V2 header is present (`allow_legacy=False` turns it off). `verify_send21_signature_v2` and the legacy `verify_send21_signature` are also exported. Check the raw bytes before parsing. Store `X-Send21-Delivery` and ignore repeats; deliveries can be retried and arrive out of order. A stdlib receiver is in `examples/webhook_receiver.py`.
 
 ## Tests
 

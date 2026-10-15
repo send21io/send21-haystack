@@ -3,7 +3,7 @@ import json
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from send21_haystack import verify_send21_signature
+from send21_haystack import verify_send21_webhook
 
 SECRET = os.environ.get("SEND21_WEBHOOK_SECRET", "")
 seen: set[str] = set()
@@ -12,7 +12,10 @@ seen: set[str] = set()
 class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         raw = self.rfile.read(min(int(self.headers.get("Content-Length", 0)), 1024 * 1024))
-        if not verify_send21_signature(raw, self.headers.get("X-Send21-Signature"), SECRET):
+        # X-Send21-Signature-V2 first (timestamp + delivery id, 5-minute window);
+        # the legacy body-only X-Send21-Signature only when no V2 header is sent.
+        valid, _scheme = verify_send21_webhook(raw, dict(self.headers.items()), SECRET)
+        if not valid:
             self.send_response(401); self.end_headers(); return
         delivery = self.headers.get("X-Send21-Delivery")
         if delivery and delivery in seen:
