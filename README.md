@@ -1,5 +1,7 @@
 # send21-haystack
 
+[send21](https://send21.io/): Crypto pay links and API for people and AI agents.
+
 A Haystack 2.x component that asks send21 to prepare a payment request and returns a pay link, plus a webhook signature helper.
 
 This is a community package. It is **not an official deepset integration**.

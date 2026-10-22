@@ -17,6 +17,7 @@ keywords = ["haystack", "send21", "payments", "agents", "mcp"]
 dev = ["pytest>=8"]
 
 [project.urls]
+Homepage = "https://send21.io/"
 Repository = "https://github.com/send21io/send21-haystack"
 Issues = "https://github.com/send21io/send21-haystack/issues"
 
