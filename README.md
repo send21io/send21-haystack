@@ -33,7 +33,7 @@ p = Pipeline()
 p.add_component("payment", payment)
 out = p.run({"payment": {"amount": 1.50, "fiat_currency": "USD",
                          "order_id": "run-42", "memo": "agent top-up"}})
-print(out["payment"]["pay_link"])   # https://send21.io/p/...
+print(out["payment"]["pay_link"])   # https://send21.io/pay/...
 ```
 
 Outputs: `id`, `pay_link`, `raw` (the full tool result).

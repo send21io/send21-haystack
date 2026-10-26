@@ -25,7 +25,7 @@ class Send21PaymentRequest:
     Usage:
         pr = Send21PaymentRequest(currency="USDC", network="base", address="0x...")
         pr.run(amount=1.5, fiat_currency="USD", order_id="run-42", memo="agent top-up")
-        # {"id": "...", "pay_link": "https://send21.io/p/...", "raw": {...}}
+        # {"id": "...", "pay_link": "https://send21.io/pay/...", "raw": {...}}
     """
 
     def __init__(self, currency: str, network: str, address: str,

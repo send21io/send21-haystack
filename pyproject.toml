@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "send21-haystack"
-version = "0.1.2"
+version = "0.1.3"
 description = "Haystack component that asks send21 to prepare a non-custodial payment request (pay link). Not an official deepset integration."
 readme = "README.md"
 license = { text = "MIT" }

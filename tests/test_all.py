@@ -12,7 +12,7 @@ def comp(client=None):
 def test_run_returns_pay_link_and_sends_verified_fields():
     c = MockSend21Client()
     out = comp(c).run(amount=1.5, fiat_currency="usd", order_id="o1", memo="m", idempotency_key="k1")
-    assert out["id"] == "demo-0001" and out["pay_link"] == "https://send21.io/p/demo-0001"
+    assert out["id"] == "demo-0001" and out["pay_link"] == "https://send21.io/demo"
     tool, args = c.calls[0]
     assert tool == "create_payment_request"
     assert set(args) == {"fiatCurrency", "fiatAmount", "options", "orderId", "memo", "expiryHours", "idempotencyKey"}
@@ -41,7 +41,7 @@ def test_bad_response_raises():
 def test_in_pipeline():
     p = Pipeline(); p.add_component("pay", comp())
     out = p.run({"pay": {"amount": 2, "fiat_currency": "EUR", "order_id": "o"}})
-    assert out["pay"]["pay_link"].startswith("https://send21.io/p/")
+    assert out["pay"]["pay_link"] == "https://send21.io/demo"
 
 
 def test_serialization_roundtrip(monkeypatch):
