@@ -14,7 +14,7 @@ send21 prepares payment instructions. A person opens the pay link and signs in t
 pip install send21-haystack
 ```
 
-From [PyPI](https://pypi.org/project/send21-haystack/) (0.1.2). For the development version, install from git instead:
+From [PyPI](https://pypi.org/project/send21-haystack/) (0.1.3). For the development version, install from git instead:
 
 ```sh
 pip install git+https://github.com/send21io/send21-haystack
